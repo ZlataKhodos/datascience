@@ -1,3 +1,3 @@
 **Кореляційний аналіз на основі "Випадкового лісу".**
 
-_Виконано на датасеті artists.csv, що складений зі стовпчиків датасетів https://www.kaggle.com/juststan/wfmu-radio-playlists/data та Billboard-Modif.xlsx. Датасети взято на сайтті kaggle.com._
+**Виконано на датасеті artists.csv, що складений зі стовпчиків датасетів https://www.kaggle.com/juststan/wfmu-radio-playlists/data та Billboard-Modif.xlsx. Датасети взято на сайтті kaggle.com.**
