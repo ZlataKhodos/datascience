@@ -14,47 +14,31 @@ import matplotlib.pyplot as plt
 
 app = Flask(__name__)
 
+dataset = pd.read_csv('artists.csv')
+dataset.head()
+
+X = dataset.iloc[:, 0:4].values
+y = dataset.iloc[:, 2].values
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=0)
+filename = 'finalized_model.pkl'
+
 @app.route('/', methods=['POST'])
 def predict():
-    dataset = pd.read_csv('artists.csv')
-    dataset.head()
-
-    X = dataset.iloc[:, 0:4].values
-    y = dataset.iloc[:, 2].values
-
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=0)
-
-    sc = StandardScaler()
-    X_train = sc.fit_transform(X_train)
-    X_test = sc.transform(X_test)
-
-    regressor = RandomForestRegressor(n_estimators=200, random_state=0)
-    regressor.fit(X_train, y_train)
-    y_pred = regressor.predict(X_test)
-
-    print('y_pred = ', y_pred)
-
-    print('Mean Absolute Error:', metrics.mean_absolute_error(y_test, y_pred))
-    print('Mean Squared Error:', metrics.mean_squared_error(y_test, y_pred))
-    print('Root Mean Squared Error:', np.sqrt(metrics.mean_squared_error(y_test, y_pred)))
-
-    filename = 'finalized_model.sav'
-    pickle.dump(regressor, open(filename, 'wb'))
-
-    # some time later...
 
     # load the model from disk
     loaded_model = pickle.load(open(filename, 'rb'))
     result = loaded_model.score(X_test, y_test)
     print(result)
-    output = {'results': result[0]}
-
+    output = {'results': result}
+    #return output
     # return data
     return jsonify(results=output)
 
+#print(predict())
 
 if __name__ == '__main__':
-    app.run(port=5000, debug=True)
+    app.run()
 #
 # X_list = list(X[:,0])
 # y_list = list(y)
