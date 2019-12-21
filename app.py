@@ -1,16 +1,13 @@
 import pickle
 
-import numpy
-
 import pandas as pd
 import numpy as np
-import pylab
 from flask import Flask, render_template
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestRegressor
 from sklearn import metrics
 from sklearn.preprocessing import StandardScaler
-import matplotlib.pyplot as plt
+
 app = Flask(__name__)
 dataset = pd.read_csv('artists.csv')
 dataset.head()
