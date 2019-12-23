@@ -9,7 +9,7 @@ session = db.sqlalchemy_session
 session.query(artists).delete()
 
 add_data = []
-with open('../artists.csv') as csv_file:
+with open('artists.csv') as csv_file:
     csv_reader = csv.reader(csv_file, delimiter=',')
     line_count = 0
     for row in csv_reader:

@@ -22,14 +22,6 @@ app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL",
                                                   "postgres://zsuiqzjfnryfqt:c15b2cf95d4adaf7477b92a3a51224ece7f0906d557f2bbd00c71226895040cb@ec2-174-129-32-240.compute-1.amazonaws.com:5432/dcku3qgnh2f0gf")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
-dataset = pd.read_csv('artists.csv')
-dataset.head()
-
-X = dataset.iloc[:, 0:4].values
-y = dataset.iloc[:, 2].values
-print(X)
-print(y)
-
 Year = []
 Week_album = []
 Week_population = []
