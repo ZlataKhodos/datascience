@@ -9,7 +9,6 @@ from sklearn import metrics
 from sklearn.preprocessing import StandardScaler
 
 from dao.artists_create import artists
-from dao.credentials import *
 import os
 from dao.db import PostgresDb
 
