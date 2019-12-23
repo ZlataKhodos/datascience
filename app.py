@@ -8,13 +8,55 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn import metrics
 from sklearn.preprocessing import StandardScaler
 
+from dao.artists_create import artists
+from dao.credentials import *
+import os
+from dao.db import PostgresDb
+
+
+db = PostgresDb()
+
 app = Flask(__name__)
+
+app.secret_key = os.getenv("SECRET_KEY", "jkm-vsnej9l-vm9sqm3:lmve")
+app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL",
+                                                  f"postgresql://{username}:{password}@{host}:{port}/{database}")
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+
 dataset = pd.read_csv('artists.csv')
 dataset.head()
 
 X = dataset.iloc[:, 0:4].values
 y = dataset.iloc[:, 2].values
+print(X)
+print(y)
 
+Year = []
+Week_album = []
+Week_population = []
+Top_place = []
+Average_orders = []
+
+result = db.sqlalchemy_session.query(artists).all()
+for row in result:
+    Year.append(row.Year)
+    Week_album.append(row.Week_album)
+    Week_population.append(row.Week_population)
+    Top_place.append(row.Top_place)
+    Average_orders.append(row.Average_orders)
+print('-----------------------------------------------')
+print(len(Year), Year)
+print(len(Week_album), Week_album)
+print(len(Week_population), Week_population)
+print(len(Top_place), Top_place)
+print(len(Average_orders), Average_orders)
+print('-----------------------------------------------')
+X = pd.DataFrame(list(zip(Year, Week_album, Week_population, Top_place, Average_orders)),
+                     columns=['Year', 'Week_album', 'Week_population', 'Top_place', 'Average_orders'])
+
+y = pd.DataFrame(Week_population)
+print('X_new', X)
+print('Y_new', y)
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=0)
 
 sc = StandardScaler()
