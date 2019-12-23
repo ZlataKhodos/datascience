@@ -1,5 +1,4 @@
 import pickle
-
 import pandas as pd
 import numpy as np
 from flask import Flask, render_template
@@ -7,11 +6,9 @@ from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestRegressor
 from sklearn import metrics
 from sklearn.preprocessing import StandardScaler
-
 from dao.artists_create import artists
 import os
 from dao.db import PostgresDb
-
 
 db = PostgresDb()
 
@@ -35,19 +32,19 @@ for row in result:
     Week_population.append(row.Week_population)
     Top_place.append(row.Top_place)
     Average_orders.append(row.Average_orders)
-print('-----------------------------------------------')
-print(len(Year), Year)
-print(len(Week_album), Week_album)
-print(len(Week_population), Week_population)
-print(len(Top_place), Top_place)
-print(len(Average_orders), Average_orders)
-print('-----------------------------------------------')
+# print('-----------------------------------------------')
+# print(len(Year), Year)
+# print(len(Week_album), Week_album)
+# print(len(Week_population), Week_population)
+# print(len(Top_place), Top_place)
+# print(len(Average_orders), Average_orders)
+# print('-----------------------------------------------')
 X = pd.DataFrame(list(zip(Year, Week_album, Week_population, Top_place, Average_orders)),
                      columns=['Year', 'Week_album', 'Week_population', 'Top_place', 'Average_orders'])
 
 y = pd.DataFrame(Week_population)
-print('X_new', X)
-print('Y_new', y)
+# print('X_new', X)
+# print('Y_new', y)
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=0)
 
 sc = StandardScaler()
@@ -70,7 +67,7 @@ pickle.dump(regressor, open(filename, 'wb'))
 # some time later...
 
 # load the model from disk
-@app.route('/')
+@app.route('/', methods = ['GET', 'POST'])
 def predict():
     loaded_model = pickle.load(open(filename, 'rb'))
     result = loaded_model.score(X_test, y_test)
