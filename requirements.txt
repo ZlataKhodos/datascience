@@ -10,7 +10,7 @@ gunicorn==19.9.0
 h5py==2.10.0
 html2text==2015.11.4
 itsdangerous==1.1.0
-Jinja2==2.10.3
+Jinja2==2.11.3
 joblib==0.14.0
 kiwisolver==1.1.0
 Markdown==2.6.5
